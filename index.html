@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alphabet App</title>
+  </head>
+  <body>
+    <script>
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const alphabetImgs = [];
+
+      for (let i = 0; i < alphabet.length; i++) {
+        const letter = alphabet[i];
+        const numLetter = Math.floor(Math.random() * 3) + 3;
+        for (let j = 0; j < numLetter; j++) {
+          const img = document.createElement('img');
+          img.src = `alphabet_character_${letter.toLowerCase()}.png`;
+          img.style.position = 'absolute';
+          img.style.top = `${Math.random() * window.innerHeight}px`;
+          img.style.left = `${Math.random() * window.innerWidth}px`;
+          img.style.width = '5%';
+          img.addEventListener('mousedown', onMouseDown);
+          document.body.appendChild(img);
+          alphabetImgs.push(img);
+        }
+      }
+
+      function onMouseDown(e) {
+        e.preventDefault();
+        const img = e.target;
+        let prevX = e.clientX;
+        let prevY = e.clientY;
+        function onMouseMove(e) {
+          const dx = e.clientX - prevX;
+          const dy = e.clientY - prevY;
+          img.style.top = `${parseInt(img.style.top) + dy}px`;
+          img.style.left = `${parseInt(img.style.left) + dx}px`;
+          prevX = e.clientX;
+          prevY = e.clientY;
+        }
+        function onMouseUp(e) {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      }
+    </script>
+  </body>
+</html>
