@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Alphabet App</title>
+    <title>Alphabet and Numbers App</title>
   </head>
   <body>
     <script>
-      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const alphabetImgs = [];
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ012345678901234567890123456789AIUEOAIUEOAIUEOAIUEOAIUEO';
+      const characterImgs = [];
 
-      for (let i = 0; i < alphabet.length; i++) {
-        const letter = alphabet[i];
-        const numLetter = Math.floor(Math.random() * 5) + 3;
-        for (let j = 0; j < numLetter; j++) {
-          const img = document.createElement('img');
-          img.src = `alphabet_character_${letter.toLowerCase()}.png`;
-          img.style.position = 'absolute';
-          img.style.top = `${Math.random() * window.innerHeight}px`;
-          img.style.left = `${Math.random() * window.innerWidth}px`;
-          img.style.width = '5%';
-          img.addEventListener('mousedown', onMouseDown);
-          img.addEventListener('touchstart', onTouchStart);
-          document.body.appendChild(img);
-          alphabetImgs.push(img);
+      for (let i = 0; i < characters.length; i++) {
+        const character = characters[i];
+        const img = document.createElement('img');
+        
+        if (character >= '0' && character <= '9') {
+          img.src = `candle_number${character}.png`;
+        } else {
+          img.src = `alphabet_character_${character.toLowerCase()}.png`;
         }
+
+        img.style.position = 'absolute';
+        img.style.top = `${Math.random() * window.innerHeight}px`;
+        img.style.left = `${Math.random() * window.innerWidth}px`;
+        img.style.width = '5%';
+        img.addEventListener('mousedown', onMouseDown);
+        img.addEventListener('touchstart', onTouchStart);
+        document.body.appendChild(img);
+        characterImgs.push(img);
       }
 
       function onMouseDown(e) {
