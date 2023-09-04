@@ -22,8 +22,10 @@
         img.style.top = `${Math.random() * window.innerHeight}px`;
         img.style.left = `${Math.random() * window.innerWidth}px`;
         img.style.width = '5%';
+        img.style.transformOrigin = 'center center'; // Set transform origin to the center of the image
         img.addEventListener('mousedown', onMouseDown);
         img.addEventListener('touchstart', onTouchStart);
+        img.addEventListener('contextmenu', onRightClick); // Add right-click event listener
         document.body.appendChild(img);
         characterImgs.push(img);
       }
@@ -68,6 +70,27 @@
         }
         document.addEventListener('touchmove', onTouchMove);
         document.addEventListener('touchend', onTouchEnd);
+      }
+
+      function onRightClick(e) {
+        e.preventDefault();
+        const img = e.target;
+        const currentRotation = getRotation(img);
+        const newRotation = (currentRotation + 45) % 360;
+        img.style.transform = `rotate(${newRotation}deg)`;
+      }
+
+      function getRotation(element) {
+        const style = window.getComputedStyle(element);
+        const transform = style.getPropertyValue('transform');
+        if (transform && transform !== 'none') {
+          const values = transform.split('(')[1].split(')')[0].split(',');
+          const a = values[0];
+          const b = values[1];
+          const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+          return (angle < 0 ? angle + 360 : angle);
+        }
+        return 0;
       }
     </script>
   </body>
